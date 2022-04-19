@@ -1,0 +1,1 @@
+/usr/bin/gcc -g   CMakeFiles/rft_client.dir/rft_client.c.o CMakeFiles/rft_client.dir/rft_util.c.o CMakeFiles/rft_client.dir/rft_client_util.c.o CMakeFiles/rft_client.dir/rft_client_logging.c.o  -o rft_client 

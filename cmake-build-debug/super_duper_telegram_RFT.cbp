@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="super_duper_telegram_RFT"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test_rft_client_util">
+				<Option output="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/test_rft_client_util" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 test_rft_client_util"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test_rft_client_util/fast">
+				<Option output="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/test_rft_client_util" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 test_rft_client_util/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rft_server">
+				<Option output="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/rft_server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 rft_server"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rft_server/fast">
+				<Option output="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/rft_server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 rft_server/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rft_client">
+				<Option output="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/rft_client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 rft_client"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rft_client/fast">
+				<Option output="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/rft_client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 rft_client/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/munit.c">
+			<Option target="test_rft_client_util"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/munit.h">
+			<Option target="test_rft_client_util"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client.c">
+			<Option target="rft_client"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_logging.c">
+			<Option target="test_rft_client_util"/>
+			<Option target="rft_client"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_logging.h">
+			<Option target="test_rft_client_util"/>
+			<Option target="rft_client"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_util.c">
+			<Option target="test_rft_client_util"/>
+			<Option target="rft_client"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_util.h">
+			<Option target="test_rft_client_util"/>
+			<Option target="rft_client"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_server.c">
+			<Option target="rft_server"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_util.c">
+			<Option target="test_rft_client_util"/>
+			<Option target="rft_server"/>
+			<Option target="rft_client"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_util.h">
+			<Option target="test_rft_client_util"/>
+			<Option target="rft_server"/>
+			<Option target="rft_client"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/test_rft_client_util.c">
+			<Option target="test_rft_client_util"/>
+		</Unit>
+		<Unit filename="/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
