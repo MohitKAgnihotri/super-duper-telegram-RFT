@@ -7,22 +7,6 @@
 #IncludeRegexTransform: 
 
 /mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client.c
-fcntl.h
--
-stdlib.h
--
-time.h
--
-sys/stat.h
--
-errno.h
--
-string.h
--
-math.h
--
-rft_client_logging.h
-/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_logging.h
 
 /mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_logging.c
 stdio.h
@@ -51,8 +35,12 @@ errno.h
 -
 math.h
 -
+time.h
+-
 rft_client_logging.h
 /mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_logging.h
+rft_client_util.h
+/mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_util.h
 
 /mnt/c/Workspace/Chegg/2022/super-duper-telegram-RFT/rft_client_util.h
 stdio.h

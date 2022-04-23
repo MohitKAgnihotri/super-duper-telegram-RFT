@@ -1,1 +1,0 @@
-/usr/bin/gcc -g   CMakeFiles/super_duper_telegram_RFT.dir/main.c.o  -o super_duper_telegram_RFT 
