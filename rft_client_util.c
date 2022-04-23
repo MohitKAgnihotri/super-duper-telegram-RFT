@@ -115,6 +115,22 @@ void init_segment(protocol_t *proto, seg_type type, bool payload_only) {
  *  - you have to detect an error when reading from the proto's input file
  */
 void read_data(protocol_t *proto) {
+  size_t bytes_read = 0;
+  if (proto == NULL) {
+    exit_err_state(proto, PS_BAD_READ, __LINE__);
+  }
+
+  if (proto->in_file == NULL) {
+    exit_err_state(proto, PS_BAD_READ, __LINE__);
+  }
+
+  memset(proto->data.payload, 0, PAYLOAD_SIZE);
+  if (!feof(proto->in_file)) {
+    bytes_read = fread(proto->data.payload, 1, PAYLOAD_SIZE-1, proto->in_file);
+    proto->data.file_data = bytes_read;
+  }
+  proto->tfr_bytes -=bytes_read;
+
   return;
 }
 
@@ -134,7 +150,7 @@ void read_data(protocol_t *proto) {
  */
 void send_data(protocol_t *proto) {
   if (proto == NULL) {
-    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+    exit_err_state(proto, PS_BAD_READ, __LINE__);
   }
 
   bool loss_prob = false;
@@ -149,7 +165,7 @@ void send_data(protocol_t *proto) {
 
   proto->data.checksum = checksum(proto->data.payload, loss_prob);
 
-  log_protocol(proto);
+  setnlog_protocol(proto, PS_DATA_SEND, __LINE__);
 
   ssize_t bytes_sent = sendto(proto->sockfd, &proto->data, proto->seg_size, 0,
                           (struct sockaddr *) &proto->server, proto->sockaddr_size);
@@ -231,14 +247,14 @@ void send_file_with_timeout(protocol_t *proto) {
  */
 bool send_metadata(protocol_t *proto) {
   if (proto == NULL) {
-    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+    exit_err_state(proto, PS_BAD_READ, __LINE__);
   }
   metadata_t *metadata = (metadata_t *) malloc(sizeof(metadata_t));
   if (metadata == NULL) {
-    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+    exit_err_state(proto, PS_BAD_READ, __LINE__);
   }
 
-  memccpy(metadata->name, proto->src_file, 0, MAX_FILENAME_SIZE);
+  memccpy(metadata->name, proto->out_fname, 0, MAX_FILENAME_SIZE);
   metadata->size = proto->fsize;
 
   ssize_t bytes_sent = sendto(proto->sockfd, metadata, sizeof(metadata_t), 0,
@@ -256,7 +272,7 @@ bool send_metadata(protocol_t *proto) {
  */
 void set_socket_timeout(protocol_t *proto) {
   if (proto == NULL) {
-    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+    exit_err_state(proto, PS_BAD_READ, __LINE__);
   }
   if (setsockopt(proto->sockfd, SOL_SOCKET, SO_RCVTIMEO, &proto->timeout_sec, sizeof(proto->timeout_sec)) < 0) {
     exit_err_state(proto, PS_BAD_SOCKTOUT, __LINE__);
@@ -278,7 +294,7 @@ void set_udp_socket(protocol_t *proto) {
   int sockfd;
 
   if (proto == NULL) {
-    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+    exit_err_state(proto, PS_BAD_READ, __LINE__);
   }
 
   sockfd = socket(AF_INET, SOCK_DGRAM, 0);
