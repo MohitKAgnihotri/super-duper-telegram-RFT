@@ -103,6 +103,26 @@ void init_protocol(protocol_t *proto) {
  * See documentation in rft_client_util.h and the assignment specification
  */
 void init_segment(protocol_t *proto, seg_type type, bool payload_only) {
+  if (type == DATA_SEG)
+  {
+    if (payload_only)
+      memset(proto->data.payload, 0, sizeof(proto->data.payload));
+    else
+    {
+      memset(&proto->data, 0, sizeof(segment_t));
+      proto->data.type = DATA_SEG;
+    }
+  }
+  else if (type == ACK_SEG)
+  {
+    if (payload_only)
+      memset(proto->ack.payload, 0, sizeof(proto->ack.payload));
+    else
+    {
+      memset(&proto->ack, 0, sizeof(proto->ack));
+      proto->ack.type = ACK_SEG;
+    }
+  }
   return;
 }
 
@@ -306,10 +326,13 @@ void set_udp_socket(protocol_t *proto) {
   proto->sockfd = sockfd;
   memset(&proto->server, 0, sizeof(proto->server));
   proto->server.sin_family = AF_INET;
-  proto->server.sin_port = htons(proto->server_port);
+  proto->server.
+  sin_port = htons(proto->server_port);
+
   if (inet_aton(proto->server_addr, &proto->server.sin_addr) == 0) {
     close(sockfd);
     proto->sockfd = -1;
+    return;
   }
 
   proto->state = PS_TFR_READY;
