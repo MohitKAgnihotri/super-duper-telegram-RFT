@@ -252,6 +252,67 @@ void send_file_normal(protocol_t *proto) {
  * See documentation in rft_client_util.h and the assignment specification
  */
 void send_file_with_timeout(protocol_t *proto) {
+  proto->src_file = __FILE__;
+  set_socket_timeout(proto);
+  setnlog_protocol(proto, PS_START_SEND, __LINE__);
+
+  while (proto->tfr_bytes) {
+    bool retry = true;
+    read_data(proto);
+
+    proto->state = PS_DATA_SEND;
+    proto->curr_retry = 0;
+
+
+    send_data(proto);
+
+    proto->total_segments++;
+    proto->total_file_data += proto->data.file_data;
+
+    setnlog_protocol(proto, PS_ACK_WAIT, __LINE__);
+    socklen_t server_size = proto->sockaddr_size;
+    struct sockaddr_in server;
+    memset(&server, 0, server_size);
+    ssize_t nbytes = 0;
+
+    while (retry) {
+      init_segment(proto, ACK_SEG, false);
+
+      nbytes = recvfrom(proto->sockfd, &proto->ack, proto->seg_size,
+                                0, (struct sockaddr *) &server, &server_size);
+
+      if (nbytes == -1 && ((errno == EAGAIN) ||  (errno == EWOULDBLOCK))) {
+        setnlog_protocol(proto, PS_NO_ACK, __LINE__);
+        if (proto->curr_retry > proto->max_retries) {
+          retry = false;
+        }
+        setnlog_protocol(proto, PS_ACK_RECV, __LINE__);
+        proto->curr_retry++;
+        send_data(proto);
+      }
+      else
+      {
+        retry = false; // we received an acknowledgement
+      }
+    }
+
+
+    if (nbytes != proto->seg_size)
+      exit_err_state(proto, PS_BAD_ACK, __LINE__);
+
+    if (proto->data.sq != proto->ack.sq)
+      exit_err_state(proto, PS_BAD_ACK_SQ, __LINE__);
+    proto_state state = verify_server(proto, &server, server_size);
+    if (proto->state != state)
+      exit_err_state(proto, state, __LINE__);
+
+    setnlog_protocol(proto, PS_ACK_RECV, __LINE__);
+
+    proto->data.sq++;
+  }
+
+  proto->state = proto->fsize ? PS_TFR_COMPLETE : PS_EMPTY_FILE;
+
   return;
 }
 
@@ -294,8 +355,14 @@ void set_socket_timeout(protocol_t *proto) {
   if (proto == NULL) {
     exit_err_state(proto, PS_BAD_READ, __LINE__);
   }
-  if (setsockopt(proto->sockfd, SOL_SOCKET, SO_RCVTIMEO, &proto->timeout_sec, sizeof(proto->timeout_sec)) < 0) {
+
+  struct timeval tv;
+  tv.tv_sec = proto->timeout_sec;
+  tv.tv_usec = 0;
+
+  if (setsockopt(proto->sockfd, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
     exit_err_state(proto, PS_BAD_SOCKTOUT, __LINE__);
+
   }
   return;
 }
