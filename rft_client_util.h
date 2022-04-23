@@ -99,8 +99,10 @@ typedef enum {
     PS_BAD_S_ADDR   = 30,   // bad sin_addr in server ACK
     PS_EXCEED_RETRY = 32,   // retry limit exceeded
     PS_BAD_SOCKTOUT = 34,   // could not set the socket timeout option
-    PS_BAD_LOG      = 36    // protocol source file name or line number not set
-                            // for logging
+    PS_BAD_LOG      = 36,   // protocol source file name or line number not set
+    PS_SOCKET_FAIL  = 37,   // socket creation failed
+    PS_BAD_HOST     = 38,   // could not resolve host name
+    PS_FATAL_MEMORY = 39,   // out of memory or null pointer
 } proto_state;
 
 /*

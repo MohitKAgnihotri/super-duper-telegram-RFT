@@ -103,7 +103,7 @@ static char* state_str[] = {
     "PS_EXCEED_RETRY",  // 32 - PS_EXCEED_RETRY
     NULL,               // 33 - undefined
     "PS_BAD_SOCKTOUT",  // 34 - PS_BAD_SOCKTOUT
-    NULL,               // 35 - undefined
+    "PS_SOCKET_FAIL",               // 35 - undefined
     "PS_BAD_LOG"        // 36 - PS_BAD_LOG
 };
 

@@ -7,7 +7,9 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <math.h>
+#include <time.h>
 #include "rft_client_logging.h"
+#include "rft_client_util.h"
 
 /* 
  * is_corrupted - returns true with the given probability 
@@ -19,13 +21,13 @@
  * DO NOT EDIT the is_corrupted function.
  */
 static bool is_corrupted(float prob) {
-    if (fpclassify(prob) == FP_ZERO)
-        return false;
-    
-    float r = (float) rand();
-    float max = (float) RAND_MAX;
-    
-    return (r / max) <= prob;
+  if (fpclassify(prob) == FP_ZERO)
+    return false;
+
+  float r = (float) rand();
+  float max = (float) RAND_MAX;
+
+  return (r / max) <= prob;
 }
 
 /* 
@@ -44,21 +46,21 @@ static bool is_corrupted(float prob) {
  *
  * DO NOT EDIT the verify_server function.
  */
-static proto_state verify_server(protocol_t* proto, struct sockaddr_in* server, 
-    socklen_t server_size) {
-    if (server_size != proto->sockaddr_size)
-        return PS_BAD_S_SIZE;
-    
-    if (server->sin_port != proto->server.sin_port)
-        return PS_BAD_S_PORT;
-        
-    if (server->sin_family != proto->server.sin_family)
-        return PS_BAD_S_FAM;
-        
-    if (server->sin_addr.s_addr != proto->server.sin_addr.s_addr)
-        return PS_BAD_S_ADDR;
-        
-    return proto->state;
+static proto_state verify_server(protocol_t *proto, struct sockaddr_in *server,
+                                 socklen_t server_size) {
+  if (server_size != proto->sockaddr_size)
+    return PS_BAD_S_SIZE;
+
+  if (server->sin_port != proto->server.sin_port)
+    return PS_BAD_S_PORT;
+
+  if (server->sin_family != proto->server.sin_family)
+    return PS_BAD_S_FAM;
+
+  if (server->sin_addr.s_addr != proto->server.sin_addr.s_addr)
+    return PS_BAD_S_ADDR;
+
+  return proto->state;
 }
 
 /*
@@ -68,10 +70,10 @@ static proto_state verify_server(protocol_t* proto, struct sockaddr_in* server,
  *
  * DO NOT EDIT the setnlog_protocol function.
  */
-static void setnlog_protocol(protocol_t* proto, proto_state state, int line) {
-    proto->state = state;
-    proto->src_line = line;
-    log_protocol(proto);
+static void setnlog_protocol(protocol_t *proto, proto_state state, int line) {
+  proto->state = state;
+  proto->src_line = line;
+  log_protocol(proto);
 }
 
 /* 
@@ -80,19 +82,19 @@ static void setnlog_protocol(protocol_t* proto, proto_state state, int line) {
  *
  * DO NOT EDIT the init_protocol function.
  */
-void init_protocol(protocol_t* proto) {
-    memset(proto, 0, sizeof(protocol_t));
-    proto->state = PS_INIT;
-    proto->in_file = NULL;
-    proto->sockfd = -1;
-    proto->seg_size = sizeof(segment_t);
-    proto->sockaddr_size = (socklen_t) sizeof(struct sockaddr_in); 
-    proto->timeout_sec = DEFAULT_TIMEOUT;
-    proto->curr_retry = 0;
-    proto->max_retries = DEFAULT_RETRIES;
-    
-    init_segment(proto, DATA_SEG, false);
-    init_segment(proto, ACK_SEG, false);
+void init_protocol(protocol_t *proto) {
+  memset(proto, 0, sizeof(protocol_t));
+  proto->state = PS_INIT;
+  proto->in_file = NULL;
+  proto->sockfd = -1;
+  proto->seg_size = sizeof(segment_t);
+  proto->sockaddr_size = (socklen_t) sizeof(struct sockaddr_in);
+  proto->timeout_sec = DEFAULT_TIMEOUT;
+  proto->curr_retry = 0;
+  proto->max_retries = DEFAULT_RETRIES;
+
+  init_segment(proto, DATA_SEG, false);
+  init_segment(proto, ACK_SEG, false);
 }
 
 /* 
@@ -100,8 +102,8 @@ void init_protocol(protocol_t* proto) {
  *
  * See documentation in rft_client_util.h and the assignment specification
  */
-void init_segment(protocol_t* proto, seg_type type, bool payload_only) {
-    return;
+void init_segment(protocol_t *proto, seg_type type, bool payload_only) {
+  return;
 }
 
 /* 
@@ -112,8 +114,8 @@ void init_segment(protocol_t* proto, seg_type type, bool payload_only) {
  * Hint:
  *  - you have to detect an error when reading from the proto's input file
  */
-void read_data(protocol_t* proto) {
-    return;
+void read_data(protocol_t *proto) {
+  return;
 }
 
 /* 
@@ -130,8 +132,32 @@ void read_data(protocol_t* proto) {
  *  - you have to detect an error from sending data - see how the rft_server
  *      detects an error when sending an ACK
  */
-void send_data(protocol_t* proto) {
-    return;
+void send_data(protocol_t *proto) {
+  if (proto == NULL) {
+    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+  }
+
+  bool loss_prob = false;
+  if (strncmp(proto->tfr_mode, TIMEOUT_TFR_MODE, strlen(TIMEOUT_TFR_MODE)) == 0)
+  {
+    if (proto->curr_retry > proto->max_retries) {
+      exit_err_state(proto, PS_EXCEED_RETRY, __LINE__);
+    }
+
+    loss_prob = is_corrupted(proto->loss_prob);
+  }
+
+  proto->data.checksum = checksum(proto->data.payload, loss_prob);
+
+  log_protocol(proto);
+
+  ssize_t bytes_sent = sendto(proto->sockfd, &proto->data, proto->seg_size, 0,
+                          (struct sockaddr *) &proto->server, proto->sockaddr_size);
+  if (bytes_sent < 0) {
+    exit_err_state(proto, PS_BAD_SEND, __LINE__);
+  }
+
+  return;
 }
 
 /* 
@@ -140,57 +166,57 @@ void send_data(protocol_t* proto) {
  *
  * DO NOT EDIT the send_file_normal function.
  */
-void send_file_normal(protocol_t* proto) { 
-    proto->src_file = __FILE__;
-    
-    setnlog_protocol(proto, PS_START_SEND, __LINE__);
-    
-    while (proto->tfr_bytes) {
-        read_data(proto);
-        
-        proto->state = PS_DATA_SEND;
-        
-        send_data(proto);
-        
-        proto->total_segments++;
-        proto->total_file_data += proto->data.file_data;
-        
-        setnlog_protocol(proto, PS_ACK_WAIT, __LINE__);
- 
-        init_segment(proto, ACK_SEG, false);        
-        socklen_t server_size = proto->sockaddr_size;
-        struct sockaddr_in server;
-        memset(&server, 0, server_size);
-        ssize_t nbytes = recvfrom(proto->sockfd, &proto->ack, proto->seg_size,
-            0, (struct sockaddr *) &server, &server_size);
+void send_file_normal(protocol_t *proto) {
+  proto->src_file = __FILE__;
 
-        if (nbytes != proto->seg_size)
-            exit_err_state(proto, PS_BAD_ACK, __LINE__);
-        
-        if (proto->data.sq != proto->ack.sq)
-            exit_err_state(proto, PS_BAD_ACK_SQ, __LINE__);
+  setnlog_protocol(proto, PS_START_SEND, __LINE__);
 
-        proto_state state = verify_server(proto, &server, server_size);
-        if (proto->state != state)
-            exit_err_state(proto, state, __LINE__);
+  while (proto->tfr_bytes) {
+    read_data(proto);
 
-        setnlog_protocol(proto, PS_ACK_RECV, __LINE__);
+    proto->state = PS_DATA_SEND;
 
-        proto->data.sq++;
-    }
+    send_data(proto);
 
-    proto->state = proto->fsize ? PS_TFR_COMPLETE : PS_EMPTY_FILE;
-    
-    return;
-}      
+    proto->total_segments++;
+    proto->total_file_data += proto->data.file_data;
+
+    setnlog_protocol(proto, PS_ACK_WAIT, __LINE__);
+
+    init_segment(proto, ACK_SEG, false);
+    socklen_t server_size = proto->sockaddr_size;
+    struct sockaddr_in server;
+    memset(&server, 0, server_size);
+    ssize_t nbytes = recvfrom(proto->sockfd, &proto->ack, proto->seg_size,
+                              0, (struct sockaddr *) &server, &server_size);
+
+    if (nbytes != proto->seg_size)
+      exit_err_state(proto, PS_BAD_ACK, __LINE__);
+
+    if (proto->data.sq != proto->ack.sq)
+      exit_err_state(proto, PS_BAD_ACK_SQ, __LINE__);
+
+    proto_state state = verify_server(proto, &server, server_size);
+    if (proto->state != state)
+      exit_err_state(proto, state, __LINE__);
+
+    setnlog_protocol(proto, PS_ACK_RECV, __LINE__);
+
+    proto->data.sq++;
+  }
+
+  proto->state = proto->fsize ? PS_TFR_COMPLETE : PS_EMPTY_FILE;
+
+  return;
+}
 
 /* 
  * TODO: you must implement this function.
  *
  * See documentation in rft_client_util.h and the assignment specification
  */
-void send_file_with_timeout(protocol_t* proto) {   
-    return;
+void send_file_with_timeout(protocol_t *proto) {
+  return;
 }
 
 /* 
@@ -203,17 +229,39 @@ void send_file_with_timeout(protocol_t* proto) {
  *  - you have to detect an error from sending metadata - see how the rft_server
  *      detects an error when sending an ACK
  */
-bool send_metadata(protocol_t* proto) {     
+bool send_metadata(protocol_t *proto) {
+  if (proto == NULL) {
+    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+  }
+  metadata_t *metadata = (metadata_t *) malloc(sizeof(metadata_t));
+  if (metadata == NULL) {
+    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+  }
+
+  memccpy(metadata->name, proto->src_file, 0, MAX_FILENAME_SIZE);
+  metadata->size = proto->fsize;
+
+  ssize_t bytes_sent = sendto(proto->sockfd, metadata, sizeof(metadata_t), 0,
+                          (struct sockaddr *) &proto->server, proto->sockaddr_size);
+  if (bytes_sent != sizeof(metadata_t)) {
     return false;
-} 
-  
+  }
+  return true;
+}
+
 /* 
  * TODO: you must implement this function.
  *
  * See documentation in rft_client_util.h and the assignment specification
  */
-void set_socket_timeout(protocol_t* proto) {
-    return;
+void set_socket_timeout(protocol_t *proto) {
+  if (proto == NULL) {
+    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+  }
+  if (setsockopt(proto->sockfd, SOL_SOCKET, SO_RCVTIMEO, &proto->timeout_sec, sizeof(proto->timeout_sec)) < 0) {
+    exit_err_state(proto, PS_BAD_SOCKTOUT, __LINE__);
+  }
+  return;
 }
 
 /* 
@@ -226,6 +274,28 @@ void set_socket_timeout(protocol_t* proto) {
  *  - Make sure you check the return values of system calls such as 
  *      socket and inet_aton
  */
-void set_udp_socket(protocol_t* proto) {  
+void set_udp_socket(protocol_t *proto) {
+  int sockfd;
+
+  if (proto == NULL) {
+    exit_err_state(proto, PS_FATAL_MEMORY, __LINE__);
+  }
+
+  sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+  if (sockfd < 0) {
+    proto->sockfd = -1;
     return;
+  }
+
+  proto->sockfd = sockfd;
+  memset(&proto->server, 0, sizeof(proto->server));
+  proto->server.sin_family = AF_INET;
+  proto->server.sin_port = htons(proto->server_port);
+  if (inet_aton(proto->server_addr, &proto->server.sin_addr) == 0) {
+    close(sockfd);
+    proto->sockfd = -1;
+  }
+
+  proto->state = PS_TFR_READY;
+  return;
 } 
